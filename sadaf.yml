@@ -1,0 +1,26 @@
+---
+- hosts: afia
+  tasks:
+    - name: Add the user 'adilf' 
+      user:
+        name: adilf
+        comment: Adi Doe
+        uid: 1111
+        group: admin
+
+    - name: install the latest version of nginx
+      yum:
+        name: nginx
+        state: latest
+
+    - name: remove the httpd  package
+      yum:
+        name: httpd
+        state: absent
+
+    - name: Set authorized key taken from file
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+
